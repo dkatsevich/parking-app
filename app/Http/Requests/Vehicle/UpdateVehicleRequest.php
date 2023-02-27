@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Vehicle;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class VehicleRequest extends FormRequest
+class UpdateVehicleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +23,7 @@ class VehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'plate_number' => 'required|max:64'
+            'plate_number' => ['required', 'max:64', Rule::unique('vehicles')->ignore($this->route('vehicle')),]
         ];
     }
 }
