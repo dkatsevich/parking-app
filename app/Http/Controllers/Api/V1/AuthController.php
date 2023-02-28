@@ -33,8 +33,6 @@ class AuthController extends Controller
             'verification_code' => $verification_code
         ]);
 
-        event(new Registered($user));
-
         $device = substr($request->userAgent() ?? '', 0, 255);
 
         dispatch(new EmailVerifyJob($user, $verification_code));
@@ -82,6 +80,18 @@ class AuthController extends Controller
         return response()->noContent();
     }
 
+
+    public function GetVerifyCode(Request $request)
+    {
+        $verification_code = (string)mt_rand(100000, 999999);
+        auth()->user()->update(compact('verification_code'));
+
+        dispatch(new EmailVerifyJob(auth()->user(), $verification_code));
+
+        return response()->json([
+            "message" => "Код було надіслано на вашу пошту"
+        ], Response::HTTP_OK);
+    }
 
 
     public function verify(Request $request)

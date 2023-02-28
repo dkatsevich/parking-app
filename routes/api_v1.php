@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CategoriesController;
 use App\Http\Controllers\Api\V1\ParkingController;
 use App\Http\Controllers\Api\V1\ProfileController;
 use App\Http\Controllers\Api\V1\VehicleController;
@@ -24,6 +25,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('profile/verify', [AuthController::class, 'verify']);
+    Route::get('profile/get-verify-code', [AuthController::class, 'GetVerifyCode']);
 
 
     Route::controller(ProfileController::class)->group(function() {
@@ -45,6 +47,12 @@ Route::middleware('auth:sanctum')->group(function () {
             'vehicles' => VehicleController::class,
         ]);
     });
+
+
+    Route::get('categories', [CategoriesController::class, 'index']);
+    // Route::apiResources([
+    //     'products' => VehicleController::class,
+    // ]);
 });
 
 
