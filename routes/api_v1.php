@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::get('categories', [CategoriesController::class, 'index']);
+    Route::get('categories/{category}', [CategoriesController::class, 'show']);
     // Route::apiResources([
     //     'products' => VehicleController::class,
     // ]);
